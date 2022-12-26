@@ -1,9 +1,10 @@
 class Gui {
-    constructor (){
+    constructor (game){
         this.cnv = null;
         this.ctx = null;
         this.resources = null;
         this.resourcesToLoad = 0;
+        this.gameloop = new GameLoop(game);
     }
 
     resize(){
@@ -39,21 +40,21 @@ class Gui {
         this.toggleScreen(id, true);
     }
 
-    lauchIfReady(){
-        this.resourcesToLoad.toExponential.apply;
+    launchIfReady(){
+        this.resourcesToLoad--;
         if(this.resourcesToLoad==0){
             this.prepareCanvas();
             this.showScreen("start");
         }
     }
     beginLoadingImage(imgVar, fileName){
-        imgVar.onLoad = () => this.launchIfReady();
+        imgVar.onload = () => this.launchIfReady();
         imgVar.src= fileName;
     }
 
     beginLoadingAudio(audioVar, fileName){
         audioVar.src= fileName;
-        audioVar.addEventListener('canplay',()=> this.lauchIfReady())
+        audioVar.addEventListener('canplay',()=> this.launchIfReady())
     }
 
 
@@ -61,7 +62,7 @@ class Gui {
         if(!resources|| resources.length==0){
             this.prepareCanvas();
             this.showScreen("start");
-            return
+            return;
         }
         if( resources){
             this.resources = resources;
@@ -84,7 +85,7 @@ class Gui {
         }
     }
 
-    getResources(id){
+    getResource(id){
         return this.resources.filter(r => r.id === id)[0].var;
     }
 
@@ -92,4 +93,9 @@ class Gui {
         return this.resources;
     }
 
+    startGame(){
+        this.prepareCanvas();
+        this.showScreen("canvas");
+        this.gameloop.start();
+    }
 }

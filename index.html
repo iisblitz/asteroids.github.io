@@ -5,6 +5,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Asteroids</title>
+    <script src="keyhandler.js"></script>
+    <script src="player.js"></script>
+    <script src="fx.js"></script>
+    <script src='game.js'></script>
+    <script src="gameloop.js"></script>
     <script src="gui.js"></script>
     <script src="index.js"></script>
     
@@ -18,12 +23,12 @@
 
     <div id="start" class="screen" style="display: none">
         <img src="assets/game screens/Diapositiva1.PNG" alt="start game">
-        <button click=""> Let's play</button>
+        <button onClick="window.gui.startGame()"> Let's play</button>
     </div>
 
     <div id='end' class="screen" style="display: none">
         <img src="assets/game screens/Diapositiva2.PNG" alt="game over">
-        <button click=""> Try again!</button>
+        <button onClick="window.gui.startGame()"> Try again!</button>
     </div>
 
 </body>

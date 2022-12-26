@@ -1,4 +1,5 @@
-window.gui = new Gui();
+let game = new Game();
+window.gui = new Gui(game);
 
 window.onload = function(){
     console.log('loading...')
@@ -11,7 +12,7 @@ window.onload = function(){
     ]);
 };
 window.onrezise = function(){
-    console.log('resizing...')
+    console.log('resizing...') 
     window.gui.resize();
-}
+};
 
