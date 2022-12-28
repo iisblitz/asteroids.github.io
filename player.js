@@ -77,6 +77,7 @@ class Player{
             this.laserSound.currentTime= 0;
             this.laserSound.play();
             this.projectileService.fire();
+            console.log('fire!')
         }
         }
 
@@ -87,7 +88,7 @@ class Player{
     }
 
     render( ){
-        this.fx.rotateAndDrawImage(this.img, this.x, this.y, this.angle)
         this.projectileService.render();
+        this.fx.rotateAndDrawImage(this.img, this.x, this.y, this.angle)
     }
 }

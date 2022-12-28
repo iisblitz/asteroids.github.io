@@ -2,7 +2,7 @@
 class ProjectileService{
     constructor(owner){
         this.owner = owner;
-        this.max= 5
+        this.max= 10;
         this.pointer = 0;
         this.collection = []
     }
@@ -15,7 +15,6 @@ class ProjectileService{
             p.init();
             this.collection.push(p);
         }
-        console.log(this.collection)
     }
     update(){
         this.collection.forEach(p => {
@@ -46,10 +45,10 @@ class Projectile{
     constructor(owner){
         this.owner = owner;
         this.angle = this.owner.angle;
-        this.speed = 100
+        this.speed = 15
         this.x= 0;
         this.y=0;
-        this.size = 1
+        this.size = 3
         this.active = false;
         this.lifespan= 100;
         this.alive = this.lifespan;
@@ -71,8 +70,8 @@ class Projectile{
     }
     render() {
         if( this.active){
-            console.log(this.x, this.y, this.size)
-            this.fx.drawCircle(this.x, this.y, this.size, "blue")
+ 
+            this.fx.drawCircle(this.x, this.y, this.size, "green")
 
         }
     }

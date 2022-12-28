@@ -10,7 +10,7 @@ class Fx{
 
     }
     fillCanvas(color){
-        this.drawRect(0,0, this.cnv.width, this.cnv.height)
+        this.drawRect(0,0, this.cnv.width, this.cnv.height, color)
     }
 
     drawRect(x,y, width,height,color){
