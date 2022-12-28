@@ -1,12 +1,13 @@
 class AsteroidService{
-    constructor(player){
+    constructor(player, particles){
         this.collection=[]
         this.player = player;
+        this.particles = particles;
     }
     init(total){
         this.collection = [];
         for ( let i = 0; i < total; i++){
-            let asteroid = new Asteroid();
+            let asteroid = new Asteroid(1);
             asteroid.init();
             this.collection.push(asteroid);
         }
@@ -16,7 +17,7 @@ class AsteroidService{
     update(){
         this.collection.forEach(a =>{
             a.update();
-            a.checkForCollisionsWithPhasers(this.player.projectileService.collection);
+            a.checkForCollisionsWithPhasers(this.player.projectileService.collection, this.particles);
         })
     }
 
@@ -28,9 +29,11 @@ class AsteroidService{
 
 
 class Asteroid{
-    constructor(){
+    constructor(size){
+        this.size = size;
         this.fx = new Fx();
         this.img = null;
+        this.boom= null;
         this.x = 0;
         this.y = 0;
         this.angle = 0;
@@ -42,7 +45,8 @@ class Asteroid{
 
     init(){
         this.fx.init();
-        this.img = window.gui.getResource("asteriod-img");
+        this.setAsteroidImg();
+        this.boom = window.gui.getResource("boom-audio");
         this.x = 0- this.img.width/2;
         this.y= 0- this.img.height/2;
         this.angle = Math.random()* Math.PI*2.0;
@@ -80,6 +84,9 @@ class Asteroid{
 
     collisionDetected(){
         this.active = false;
+        this.boom.pause();
+        this.boom.currentTime = 0;
+        this.boom.play();
     }
 
     hasCollidedWithEntity(entity){
@@ -92,13 +99,32 @@ class Asteroid{
         return !(aLeftOfB || aAboveB || aBelowB || aRightOfB)
     }
 
-    checkForCollisionsWithPhasers(phasers){
+    checkForCollisionsWithPhasers(phasers, particles){
+        if(this.active){
         phasers.forEach(p => {
             if(this.hasCollidedWithEntity(p)){
             this.collisionDetected();
+            particles.spawn(16,this)
             p.active = false;
             return
         
         }
     })
 }}
+
+    setAsteroidImg(){
+        switch(this.size){
+            case 2 : 
+            this.img = window.gui.getResources("asteroid-img")
+            break;
+            case 3 :
+            this.img = window.gui.getResources("asteroid-small")
+            break;
+            default :
+            this.img = window.gui.getResources("asteroid-large")
+            break;
+        }
+
+    }
+
+}
