@@ -86,6 +86,8 @@ class Gui {
     }
 
     getResource(id){
+        
+        
         return this.resources.filter(r => r.id === id)[0].var;
     }
 

@@ -2,6 +2,7 @@ class Player{
     constructor(){
         this.fx = new Fx();
         this.keyHandler = new KeyHandler();
+        this.projectileService = new ProjectileService(this);
         this.img = null;
         this.laserSound = null;
 
@@ -14,12 +15,15 @@ class Player{
         this.thurst = {x:0, y:0};
         this.angle = 0;
         this.rotation = 0;
+        this.reload = 10;
+        this.frames = 0
 
     }
 
     init() {
         this.fx.init();
         this.keyHandler.init();
+        this.projectileService.init();
         this.img= window.gui.getResource("player-img");
         this.laserSound = window.gui.getResource("laser-audio");
         this.x = this.fx.cnv.width/2 - this.img.width/2;
@@ -27,9 +31,13 @@ class Player{
         this.thrust = { x: 0, y:0};
         this.angle = 279/189*Math.PI;
         this.rotation = 0;
+        this.reload= 10;
+        this.frames = 0;
     }
 
     update(){
+        this.frames++;
+
         this.rotation = 0;
         this.thrust.x = this.thrust.x * this.friction;
         this.thrust.y = this.thrust.y * this.friction;
@@ -63,17 +71,23 @@ class Player{
         }
 
         if(this.keyHandler.keys.indexOf(' ')> -1) {
+            if(this.frames > this.reload){
+            this.frames = 0
             this.laserSound.pause();
             this.laserSound.currentTime= 0;
             this.laserSound.play();
+            this.projectileService.fire();
+        }
         }
 
         this.angle += this.rotation;
         this.x += this.thrust.x;
         this.y += this.thrust.y; 
+        this.projectileService.update();
     }
 
     render( ){
         this.fx.rotateAndDrawImage(this.img, this.x, this.y, this.angle)
+        this.projectileService.render();
     }
 }

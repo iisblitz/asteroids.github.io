@@ -5,7 +5,6 @@ class Fx{
     }
 
     init(){
-        console.log('fx init')
         this.cnv = document.getElementById("canvas");
         this.ctx = this.cnv.getContext('2d');
 
