@@ -1,8 +1,8 @@
 class Game {
     constructor (){  
         this.fx = new Fx(); 
-        this.player= new Player();
         this.particleService = new ParticleSevice();
+        this.player= new Player(this.particleService);
         this.asteroidService = new AsteroidService(this.player, this.particleService);
       }
     

@@ -18,12 +18,23 @@ class AsteroidService{
         this.collection.forEach(a =>{
             a.update();
             a.checkForCollisionsWithPhasers(this.player.projectileService.collection, this.particles);
+            a.checkForCollisionsWithPlayer(this.player)
         })
     }
 
     render(){
         this.collection.forEach(a =>{
             a.render();})
+    }
+
+    spawn(size, total, owner){
+        for (let i = 0; i < total; i++){
+            let asteroid = new Asteroid(size)
+            asteroid.init();
+            asteroid.x= owner.x + owner.img.width/2;
+            asteroid.y= owner.y + owner.img.height/2;
+            this.collection.push(asteroid);
+        }
     }
 }
 
@@ -78,7 +89,7 @@ class Asteroid{
 
     render(){
         if(this.active){
-        this.fx.rotateAndDrawImage(this.img, this.x, this.y, this.rotation);
+        this.fx.rotateAndDrawImage(this.img,this.x,this.y,this.rotation)
     }
     }
 
@@ -99,11 +110,16 @@ class Asteroid{
         return !(aLeftOfB || aAboveB || aBelowB || aRightOfB)
     }
 
-    checkForCollisionsWithPhasers(phasers, particles){
+    checkForCollisionsWithPhasers(phasers, particles, service){
         if(this.active){
         phasers.forEach(p => {
             if(this.hasCollidedWithEntity(p)){
             this.collisionDetected();
+            let nextSize = ++this.size;
+            let total = Math.random() * 4;
+            if( nextSize <= 3){
+                service.spawn(nextSize, total, this);
+            }
             particles.spawn(16,this)
             p.active = false;
             return
@@ -112,19 +128,34 @@ class Asteroid{
     })
 }}
 
-    setAsteroidImg(){
-        switch(this.size){
-            case 2 : 
-            this.img = window.gui.getResources("asteroid-img")
-            break;
-            case 3 :
-            this.img = window.gui.getResources("asteroid-small")
-            break;
-            default :
-            this.img = window.gui.getResources("asteroid-large")
-            break;
+    checkForCollisionsWithPlayer(player){
+        let active = (player.state == player.alive)? true:false;
+        let entity = {
+            x: this.x.player,
+            y: this.y.player,
+            size: player.img.width,
+            active: active}
+
+            if(this.hasCollidedWithEntity(entity)){
+                player.kill();
+            }
+
         }
 
-    }
+    setAsteroidImg(){
+        switch(this.size){
+            case 2:
+                this.img= window.gui.getResource("asteroid-img")
+                break;
+        
+            case 3:
+                this.img= window.gui.getResource("asteroid-small")
+                break;
+            default:
+                this.img= window.gui.getResource("asteroid-large")
+                break;
+    }}
+
+
 
 }

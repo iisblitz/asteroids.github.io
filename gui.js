@@ -86,8 +86,6 @@ class Gui {
     }
 
     getResource(id){
-        
-        
         return this.resources.filter(r => r.id === id)[0].var;
     }
 
@@ -99,5 +97,10 @@ class Gui {
         this.prepareCanvas();
         this.showScreen("canvas");
         this.gameloop.start();
+    }
+
+    stopGame(){
+        this.showScreen('end')
+        this.gameloop.stop();
     }
 }
