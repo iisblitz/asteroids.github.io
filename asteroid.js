@@ -131,8 +131,8 @@ class Asteroid{
     checkForCollisionsWithPlayer(player){
         let active = (player.state == player.alive)? true:false;
         let entity = {
-            x: this.x.player,
-            y: this.y.player,
+            x: player.x,
+            y: player.y,
             size: player.img.width,
             active: active}
 

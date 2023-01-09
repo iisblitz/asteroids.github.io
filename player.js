@@ -27,8 +27,8 @@ class Player{
 
     init() {
         this.fx.init();
-        this.keyHandler.init();
         this.projectileService.init();
+        this.keyHandler.init();
         this.img= window.gui.getResource("player-img");
         this.laserSound = window.gui.getResource("laser-audio");
         this.boom = window.gui.getResource("boom-audio");
@@ -41,7 +41,7 @@ class Player{
         this.frames = 0;
 
         this.state = this.alive;
-        this.dyingTime= 240
+        this.dyingTime= 240;
     }
 
     update(){
@@ -52,7 +52,7 @@ class Player{
         }
 
         if(this.state == this.dying){
-            this.dyingTime.toExponential.apply;
+            this.dyingTime--;
             this.state = (this.dyingTime > 0)? this.dying: this.dead;
             return
         }
