@@ -1,2 +1,5 @@
 # asteroids.github.io
-classic asteroids game on vanilla js
+
+Game dev on Vanilla JS... classic asteroids game
+
+Developed following a tutorial to master classes and constructors.
